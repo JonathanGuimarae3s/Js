@@ -1,6 +1,6 @@
 const { printName, lastName } = require('./printName');
-printName(`jONATHAN ${lastName}`)
+printName(`jONATHAN ${lastName}`);
 
 // ====
-const os =require('os')
-console.log(os.totalmem())
+const os =require('os');
+console.log(os.totalmem());

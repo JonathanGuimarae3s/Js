@@ -1,4 +1,4 @@
 exports.printName = (name) => {
-    console.log(name)
+    console.log(name);
 }
-exports.lastName = 'SILVA'
+exports.lastName = 'SILVA';
