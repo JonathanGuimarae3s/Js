@@ -1,5 +1,5 @@
 const http = require("http");
-const {URL} = require('url')
+const { URL } = require('url')
 
 const routes = require("./routes");
 
@@ -7,14 +7,28 @@ const routes = require("./routes");
 
 const server = http.createServer((request, response) => {
     const parsedUrl = new URL(`http://localhost:3000${request.url}`)
-   
+
     console.log(`Request method: ${request.method} | Endpoint: ${parsedUrl.pathname} `);
+    // ===========
+    // pegando o paramentros da url
+
+    let { pathname } = parsedUrl;
+    let id = null;
+    const splitEndpoint = pathname.split("/").filter(Boolean);
+    if (splitEndpoint.length > 1) {
+        pathname = `/${splitEndpoint[0]}/:id`;
+        id = splitEndpoint[1];
+    };
+
+    // ===========
+    // condiçao para ver se a rota existe
     const route = routes.find((routeObj) => (
         // se o method e o endpoint forem iguais a algum valor da rota quer dizer que a rota existe
         routeObj.endpoint === parsedUrl.pathname && routeObj.method === request.method)
     )
     if (route) {
-        request.query = Object.fromEntries(parsedUrl.searchParams)
+        request.params = { id };
+        request.query = Object.fromEntries(parsedUrl.searchParams);
         // se a rota existir chamara a função handler passando o request e response como parametro
         route.handler(request, response);
     } else {

@@ -15,5 +15,13 @@ module.exports = {
         response.writeHead(200, { "Content-Type": "application/json" });
         response.end(JSON.stringify(users));
 
+    },
+    getUserById(request, response) {
+        // peguei o id do objto criado no index e comparei com o id do usuario no mock
+        // se sao iguais aparecera no response, caso nao seja aparecerá mensagem de err
+        const { id } = request.params;
+        response.writeHead(200, { "Content-Type": "application/json" });
+        response.end(JSON.stringify({ id }));
+
     }
 }
