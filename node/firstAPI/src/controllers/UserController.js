@@ -12,16 +12,47 @@ module.exports = {
 
 
         })
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(JSON.stringify(users));
+
+        response.send(200, sortUsers);
 
     },
     getUserById(request, response) {
         // peguei o id do objto criado no index e comparei com o id do usuario no mock
         // se sao iguais aparecera no response, caso nao seja aparecerá mensagem de err
         const { id } = request.params;
-        response.writeHead(200, { "Content-Type": "application/json" });
-        response.end(JSON.stringify({ id }));
+        const user = users.find((user) => user.id === Number(id))
+        if (!user) {
+            return response.send(400, { error: 'user not found' });
+
+
+        }
+        response.send(200, user);
+
+
+
+    }
+    ,
+    createUser(request, response) {
+        let body = '';
+        request.on('data', (chunk) => {
+            body += chunk;
+
+        })
+
+        request.on('end', () => {
+            body = JSON.parse(body)
+            let lastUserId = users[users.length - 1].id
+                ;
+            let newUser = {
+                id: lastUserId + 1,
+                name: body.name,
+
+            }
+            users.push(newUser);
+            response.send(200, newUser)
+        })
+
+
 
     }
 }
