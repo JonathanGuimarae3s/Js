@@ -1,6 +1,6 @@
 const http = require("http");
 const url = require('url')
-
+const bodyParser = require('./helpers/bodyParse')
 const routes = require("./routes");
 
 
@@ -36,7 +36,11 @@ const server = http.createServer((request, response) => {
 
         }
         // se a rota existir chamara a função handler passando o request e response como parametro
-        route.handler(request, response);
+        if (['POST', 'PUT', 'PATCH'].includes(request.method)) {
+            bodyParser(request, () => route.handler(request, response))
+        } else {
+            route.handler(request, response);
+        }
     } else {
         response.writeHead(404, { "Content-Type": "text/html" });
 
