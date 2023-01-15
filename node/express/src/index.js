@@ -1,8 +1,8 @@
-const { response } = require("express");
-const express = require("express");
+const { response } = require('express');
+const express = require('express');
+
+const routes = require('./app/routes');
 
 const app = express();
-app.get("/", (require, response) => {
-  response.send("hello world");
-});
-app.listen(3000, () => console.log("http:localhost:3000"));
+app.use(routes)
+app.listen(3000, () => console.log('http:localhost:3000'));
