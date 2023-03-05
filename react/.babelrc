@@ -1,6 +1,8 @@
 {
-  "presets": [
-    "@babel/preset-env",
-    "@babel/preset-react"
-  ]
+    // arquivo necessario para fazer a configuracao do babel
+    
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+    ]
 }
